@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#080b12"><title>MAKAZ — Practice Game</title>
+<style>
+:root{--bg:#080b12;--panel:#111827;--line:#263244;--muted:#9aa8bc;--cyan:#25c9ff;--red:#ff4d62;--green:#17c784;--violet:#a76bff}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(circle at top,#142236 0,#080b12 42%);color:#f7f9fc;font:15px system-ui,Arial,sans-serif;min-height:100vh}
+header{position:sticky;top:0;background:#080b12ed;border-bottom:1px solid var(--line);padding:14px 16px;display:flex;align-items:center;justify-content:space-between;z-index:2}
+.brand{font-size:24px;font-weight:900;letter-spacing:2px}.brand span{color:var(--cyan)}button,input{font:inherit}button{border:0;border-radius:12px;padding:12px 14px;font-weight:750;color:white;background:#253247;cursor:pointer}button:active{transform:scale(.98)}.outline{background:transparent;border:1px solid var(--line)}.wrap{max-width:720px;margin:auto;padding:16px}.hero{padding:20px;border:1px solid #24435a;border-radius:20px;background:linear-gradient(135deg,#112a3a,#111827 70%);margin-bottom:14px}.eyebrow{color:var(--cyan);font-size:12px;font-weight:800;letter-spacing:2px}.hero h1{font-size:29px;margin:7px 0}.muted{color:var(--muted)}.stats{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:14px 0}.card{background:#101723;border:1px solid var(--line);border-radius:16px;padding:15px;margin-bottom:12px}.stat{font-size:24px;font-weight:850;margin-top:5px}.section-title{font-size:18px;font-weight:850;margin:0 0 12px}.timer{font-size:44px;text-align:center;font-weight:900;letter-spacing:3px;color:white}.round{text-align:center;color:var(--muted);font-size:12px}.colors{display:grid;grid-template-columns:repeat(3,1fr);gap:9px;margin:14px 0}.colors button{padding:16px 4px;border:2px solid transparent}.colors button.selected{border-color:white;box-shadow:0 0 0 3px #ffffff26}.red{background:var(--red)}.green{background:var(--green);color:#061b12}.violet{background:var(--violet)}.wide{width:100%;background:var(--cyan);color:#06131b}.row{display:flex;gap:8px;align-items:center;flex-wrap:wrap}.pill{background:#1c2b3e;padding:7px 10px;border-radius:99px;color:#bfeeff;font-size:12px}.history{display:grid;grid-template-columns:repeat(6,1fr);gap:7px}.dot{padding:10px 0;text-align:center;border-radius:9px;font-weight:800}.nav{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:14px}.nav button{font-size:13px;padding:11px 5px}.hidden{display:none!important}input{width:100%;background:#080e18;color:white;border:1px solid var(--line);border-radius:10px;padding:12px;margin:5px 0 12px}.label{font-size:13px;color:var(--muted)}.notice{font-size:12px;line-height:1.5;color:#a9b7c9}.result{font-size:20px;font-weight:900;text-align:center;padding:10px}.footer{text-align:center;padding:18px;color:#718096;font-size:11px}
+@media(min-width:600px){.stats{grid-template-columns:repeat(4,1fr)}}
+</style></head>
+<body>
+<header><div class="brand"><span>◇</span> MAKAZ</div><div class="row"><span class="pill">PRACTICE MODE</span><button class="outline" id="profileBtn">Profile</button></div></header>
+<main class="wrap">
+<section class="hero"><div class="eyebrow">PLAY • LEARN • PRACTICE</div><h1>Colour Prediction</h1><div class="muted">A demo game using virtual coins only.</div></section>
+<div class="stats">
+ <div class="card"><div class="muted">Virtual balance</div><div class="stat" id="balance">1,000</div></div>
+ <div class="card"><div class="muted">Current round</div><div class="stat" id="roundStat">MKZ-001</div></div>
+ <div class="card"><div class="muted">Practice points</div><div class="stat" id="points">0</div></div>
+ <div class="card"><div class="muted">Rounds played</div><div class="stat" id="played">0</div></div>
+</div>
+<div class="nav"><button id="gameTab">🎨 Colour Game</button><button id="historyTab" class="outline">📜 History</button><button id="adminTab" class="outline">⚙ Demo Admin</button></div>
+<section id="gameView" class="card">
+ <div class="section-title">Choose a colour</div><div class="round" id="roundLabel">ROUND MKZ-001</div><div class="timer" id="timer">00:30</div>
+ <div class="muted" style="text-align:center">Choose before the timer ends</div>
+ <div class="colors"><button class="red" data-color="Red">RED</button><button class="green" data-color="Green">GREEN</button><button class="violet" data-color="Violet">VIOLET</button></div>
+ <label class="label" for="stake">Virtual coins to use (10–100)</label><input id="stake" type="number" min="10" max="100" value="10">
+ <button class="wide" id="chooseBtn">Lock Practice Choice</button><div id="choiceMsg" class="result"></div>
+ <p class="notice">Practice only: no real money, deposits, withdrawals, or cash prizes. Results are simulated locally and are not predictions of real-world outcomes.</p>
+</section>
+<section id="historyView" class="card hidden"><div class="section-title">Recent results</div><div id="history" class="history"></div><p class="notice">Results are randomly simulated for learning UI behaviour.</p></section>
+<section id="adminView" class="card hidden"><div class="section-title">Demo Admin Dashboard</div><p class="notice">This is a local visual demo, not a secure production admin system. Do not use real passwords or personal data.</p>
+<div class="stats"><div><div class="muted">Demo users</div><div class="stat">1</div></div><div><div class="muted">Rounds</div><div class="stat" id="adminRounds">0</div></div><div><div class="muted">Status</div><div class="stat" style="font-size:18px;color:var(--green)">Demo</div></div><div><div class="muted">Payments</div><div class="stat" style="font-size:18px">Off</div></div></div>
+<label class="label">Admin demo PIN (try 1234)</label><input id="adminPin" type="password" inputmode="numeric" placeholder="Enter demo PIN"><button id="adminLogin">Open demo controls</button><div id="adminControls" class="hidden"><p class="muted">Demo control: reset virtual balance and points.</p><button id="resetBtn" class="outline">Reset practice data</button></div><div id="adminMsg" class="notice"></div></section>
+<section id="profileView" class="card hidden"><div class="section-title">Practice profile</div><label class="label">Display name</label><input id="displayName" value="Player" maxlength="24"><button id="saveProfile" class="wide">Save profile locally</button><p class="notice">Saved only in this page session; authentication/backend is not configured.</p></section>
+<div class="footer">MAKAZ • Android-friendly web demo • Virtual coins only</div>
+</main>
+<script>
+let balance=1000,points=0,played=0,round=1,seconds=30,selection=null,locked=false,history=[];
+const $=id=>document.getElementById(id);
+function roundId(){return 'MKZ-'+String(round).padStart(3,'0')}
+function render(){ $('balance').textContent=balance.toLocaleString();$('points').textContent=points;$('played').textContent=played;$('roundStat').textContent=roundId();$('roundLabel').textContent='ROUND '+roundId();$('timer').textContent='00:'+String(seconds).padStart(2,'0');$('adminRounds').textContent=played}
+function show(view){['gameView','historyView','adminView','profileView'].forEach(x=>$(x).classList.toggle('hidden',x!==view))}
+$('gameTab').onclick=()=>show('gameView');$('historyTab').onclick=()=>{renderHistory();show('historyView')};$('adminTab').onclick=()=>show('adminView');$('profileBtn').onclick=()=>show('profileView');
+document.querySelectorAll('[data-color]').forEach(b=>b.onclick=()=>{if(locked)return;selection=b.dataset.color;document.querySelectorAll('[data-color]').forEach(x=>x.classList.toggle('selected',x===b));$('choiceMsg').textContent='Selected: '+selection});
+$('chooseBtn').onclick=()=>{let stake=Number($('stake').value);if(locked){$('choiceMsg').textContent='Choice already locked for this round.';return}if(!selection){$('choiceMsg').textContent='Please choose a colour first.';return}if(!Number.isInteger(stake)||stake<10||stake>100||stake>balance){$('choiceMsg').textContent='Enter 10–100 coins within your balance.';return}balance-=stake;locked=true;$('choiceMsg').textContent='Locked: '+selection+' • '+stake+' virtual coins';render()};
+function finishRound(){let outcome=['Red','Green','Violet'][Math.floor(Math.random()*3)];let stake=Number($('stake').value)||10;let won=locked&&selection===outcome;if(won){balance+=stake*2;points+=stake}played++;history.unshift({id:roundId(),outcome,choice:locked?selection:'No choice',won:!!won});history=history.slice(0,18);$('choiceMsg').textContent='Result: '+outcome+(locked?(won?' — practice win!':' — not a match'):'');round++;seconds=30;selection=null;locked=false;document.querySelectorAll('[data-color]').forEach(x=>x.classList.remove('selected'));render();if(!$('historyView').classList.contains('hidden'))renderHistory()}
+function renderHistory(){$('history').innerHTML='';history.forEach(h=>{let d=document.createElement('div');d.className='dot '+h.outcome.toLowerCase();d.textContent=h.outcome[0];d.title=h.id+' • '+h.outcome+' • '+h.choice;$('history').appendChild(d)});if(!history.length)$('history').innerHTML='<span class="muted">No rounds yet.</span>'}
+$('adminLogin').onclick=()=>{if($('adminPin').value==='1234'){$('adminControls').classList.remove('hidden');$('adminMsg').textContent='Demo controls opened.'}else $('adminMsg').textContent='Incorrect demo PIN.'};
+$('resetBtn').onclick=()=>{balance=1000;points=0;played=0;round=1;seconds=30;selection=null;locked=false;history=[];$('choiceMsg').textContent='Practice data reset.';render();renderHistory()};
+$('saveProfile').onclick=()=>{let n=$('displayName').value.trim();$('adminMsg').textContent='Profile display name: '+(n||'Player');alert('Demo profile saved for this session.')};
+setInterval(()=>{seconds--;if(seconds<=0)finishRound();render()},1000);render();
+</script></body></html>
